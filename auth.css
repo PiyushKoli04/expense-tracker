@@ -1,0 +1,222 @@
+/* ============================================
+   AUTH — auth.css
+   Login, Signup, Landing Page Styles
+   ============================================ */
+
+/* ── Auth Layout ── */
+.auth-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg-primary);
+  position: relative;
+  overflow: hidden;
+  padding: var(--space-6);
+}
+
+/* ── Animated Background (Disabled for matte flat style) ── */
+.auth-page::before {
+  display: none;
+}
+
+.auth-page__bg-orb {
+  display: none;
+}
+
+/* ── Auth Card ── */
+.auth-card {
+  position: relative;
+  width: 100%;
+  max-width: 440px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-primary);
+  border-radius: var(--radius-2xl);
+  padding: var(--space-10);
+  animation: fadeInUp 600ms ease;
+  box-shadow: var(--shadow-xl);
+}
+
+.auth-card__logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-3);
+  margin-bottom: var(--space-8);
+}
+
+.auth-card__logo-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-lg);
+  background: var(--primary-cyan);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--fs-xl);
+  color: var(--text-primary);
+}
+
+.auth-card__logo-text {
+  font-family: var(--font-display);
+  font-size: var(--fs-2xl);
+  font-weight: var(--fw-bold);
+  color: var(--text-primary);
+}
+
+.auth-card__title {
+  text-align: center;
+  font-size: var(--fs-2xl);
+  font-weight: var(--fw-bold);
+  margin-bottom: var(--space-2);
+}
+
+.auth-card__subtitle {
+  text-align: center;
+  color: var(--text-muted);
+  font-size: var(--fs-sm);
+  margin-bottom: var(--space-8);
+}
+
+/* ── Auth Form ── */
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+
+.auth-form .form-group {
+  gap: var(--space-2);
+}
+
+.auth-form .form-input {
+  padding: var(--space-3) var(--space-4);
+  padding-left: 44px;
+}
+
+.auth-form__input-wrapper {
+  position: relative;
+}
+
+.auth-form__input-icon {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-muted);
+  font-size: var(--fs-sm);
+  pointer-events: none;
+}
+
+.auth-form__forgot {
+  align-self: flex-end;
+  font-size: var(--fs-xs);
+  color: var(--primary-cyan);
+  transition: color var(--transition-fast);
+}
+
+.auth-form__forgot:hover {
+  color: var(--primary-purple);
+}
+
+.auth-form__submit {
+  padding: var(--space-4);
+  font-size: var(--fs-md);
+  font-weight: var(--fw-semibold);
+}
+
+.auth-form__submit .spinner {
+  width: 20px;
+  height: 20px;
+  border-color: rgba(0, 0, 0, 0.2);
+  border-top-color: var(--text-inverse);
+}
+
+/* ── Auth Divider ── */
+.auth-divider {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  margin: var(--space-6) 0;
+}
+
+.auth-divider::before,
+.auth-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--glass-border);
+}
+
+.auth-divider__text {
+  font-size: var(--fs-xs);
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: var(--ls-wider);
+}
+
+/* ── Google Sign In Button ── */
+.auth-google-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-3);
+  width: 100%;
+  padding: var(--space-3) var(--space-5);
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-md);
+  color: var(--text-primary);
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-medium);
+  cursor: pointer;
+  transition: all var(--transition-base);
+}
+
+.auth-google-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: var(--glass-border-hover);
+}
+
+.auth-google-btn svg {
+  width: 20px;
+  height: 20px;
+}
+
+/* ── Auth Footer ── */
+.auth-card__footer {
+  text-align: center;
+  margin-top: var(--space-6);
+  font-size: var(--fs-sm);
+  color: var(--text-muted);
+}
+
+.auth-card__footer a {
+  color: var(--primary-cyan);
+  font-weight: var(--fw-semibold);
+}
+
+.auth-card__footer a:hover {
+  color: var(--primary-purple);
+}
+
+/* ── Auth Error ── */
+.auth-error {
+  display: none;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-4);
+  background: rgba(255, 82, 82, 0.08);
+  border: 1px solid rgba(255, 82, 82, 0.2);
+  border-radius: var(--radius-md);
+  font-size: var(--fs-sm);
+  color: var(--accent-red);
+}
+
+.auth-error.show {
+  display: flex;
+}
+
+.auth-error__icon {
+  flex-shrink: 0;
+}
