@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Group Expenses | Expense Tracker</title>
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="/assets/css/variables.css">
+  <link rel="stylesheet" href="/assets/css/base.css">
+  <link rel="stylesheet" href="/assets/css/layout.css">
+  <link rel="stylesheet" href="/assets/css/components.css">
+  <link rel="stylesheet" href="/assets/css/animations.css">
+  <link rel="stylesheet" href="/assets/css/group.css">
+  
+  <!-- CDNs -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  
+  <!-- Lucide Icons CDN -->
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+  
+  <!-- Firebase SDK (v9 compat) -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="sidebar__logo">
+        <div class="sidebar__logo-icon">
+          <i data-lucide="bar-chart-3" style="width: 20px; height: 20px;"></i>
+        </div>
+        <span class="sidebar__logo-text">Expense Tracker</span>
+      </div>
+      <nav class="sidebar__nav">
+        <div class="sidebar__section-title">Personal Finance</div>
+        <a href="/dashboard.html" class="sidebar__link">
+          <span class="sidebar__link-icon" style="display: flex; align-items: center; justify-content: center;">
+            <i data-lucide="home" style="width: 18px; height: 18px;"></i>
+          </span>
+          <span class="sidebar__link-text">Dashboard</span>
+        </a>
+        <a href="/pages/personal/expenses.html" class="sidebar__link">
+          <span class="sidebar__link-icon" style="display: flex; align-items: center; justify-content: center;">
+            <i data-lucide="credit-card" style="width: 18px; height: 18px;"></i>
+          </span>
+          <span class="sidebar__link-text">Expenses</span>
+        </a>
+        <a href="/pages/personal/income.html" class="sidebar__link">
+          <span class="sidebar__link-icon" style="display: flex; align-items: center; justify-content: center;">
+            <i data-lucide="banknote" style="width: 18px; height: 18px;"></i>
+          </span>
+          <span class="sidebar__link-text">Income</span>
+        </a>
+        <a href="/pages/personal/budgets.html" class="sidebar__link">
+          <span class="sidebar__link-icon" style="display: flex; align-items: center; justify-content: center;">
+            <i data-lucide="target" style="width: 18px; height: 18px;"></i>
+          </span>
+          <span class="sidebar__link-text">Budgets</span>
+        </a>
+        <a href="/pages/personal/savings.html" class="sidebar__link">
+          <span class="sidebar__link-icon" style="display: flex; align-items: center; justify-content: center;">
+            <i data-lucide="piggy-bank" style="width: 18px; height: 18px;"></i>
+          </span>
+          <span class="sidebar__link-text">Savings Goals</span>
+        </a>
+        <a href="/pages/personal/investments.html" class="sidebar__link">
+          <span class="sidebar__link-icon" style="display: flex; align-items: center; justify-content: center;">
+            <i data-lucide="trending-up" style="width: 18px; height: 18px;"></i>
+          </span>
+          <span class="sidebar__link-text">Investments</span>
+        </a>
+        <a href="/pages/personal/upcoming-spends.html" class="sidebar__link">
+          <span class="sidebar__link-icon" style="display: flex; align-items: center; justify-content: center;">
+            <i data-lucide="calendar" style="width: 18px; height: 18px;"></i>
+          </span>
+          <span class="sidebar__link-text">Upcoming Spends</span>
+        </a>
+
+        <div class="sidebar__section-title" style="margin-top:16px;">Group Splitter</div>
+        <a href="/pages/group/groups.html" class="sidebar__link">
+          <span class="sidebar__link-icon" style="display: flex; align-items: center; justify-content: center;">
+            <i data-lucide="users" style="width: 18px; height: 18px;"></i>
+          </span>
+          <span class="sidebar__link-text">My Groups</span>
+        </a>
+        <a href="/group-dashboard.html" class="sidebar__link active">
+          <span class="sidebar__link-icon" style="display: flex; align-items: center; justify-content: center;">
+            <i data-lucide="layout-dashboard" style="width: 18px; height: 18px;"></i>
+          </span>
+          <span class="sidebar__link-text">Group Dashboard</span>
+        </a>
+      </nav>
+      
+      <div class="sidebar__profile">
+        <div id="headerUserAvatar" class="sidebar__avatar" style="display: flex; align-items: center; justify-content: center;">
+          <i data-lucide="user" style="width: 20px; height: 20px;"></i>
+        </div>
+        <div class="sidebar__user-info">
+          <div id="headerUserName" class="sidebar__user-name">Loading...</div>
+          <div id="headerUserEmail" class="sidebar__user-email">...</div>
+        </div>
+        <button class="sidebar__logout-btn" data-action="logout" title="Log Out" style="display: flex; align-items: center; justify-content: center;">
+          <i data-lucide="log-out" style="width: 18px; height: 18px;"></i>
+        </button>
+      </div>
+    </aside>
+    
+    <!-- Main Content Container -->
+    <main class="main-content">
+      <!-- Header -->
+      <header class="header">
+        <div class="header__left">
+          <button id="sidebarToggle" class="header__menu-btn" style="display: flex; align-items: center; justify-content: center;">
+            <i data-lucide="menu" style="width: 20px; height: 20px;"></i>
+          </button>
+          <div>
+            <h1 class="header__title">Group Expenses</h1>
+            <span class="header__subtitle">Split apartments, dining, and trips together</span>
+          </div>
+        </div>
+        <div class="header__right">
+          <button class="header__icon-btn" data-action="toggle-theme" title="Toggle Theme" style="display: flex; align-items: center; justify-content: center;">
+            <i data-lucide="moon" style="width: 18px; height: 18px;"></i>
+          </button>
+          <button class="btn btn-secondary btn-sm" onclick="GroupExpensesModule.exportPDF()" style="display: inline-flex; align-items: center; gap: 6px;">
+            <i data-lucide="file-text" style="width: 14px; height: 14px;"></i> Export Statement
+          </button>
+          <button class="btn btn-primary btn-sm" onclick="GroupExpensesModule.openAddModal()" style="display: inline-flex; align-items: center; gap: 6px;">
+            <i data-lucide="plus" style="width: 14px; height: 14px;"></i> Log Shared Bill
+          </button>
+        </div>
+      </header>
+      
+      <!-- Page Content -->
+      <div class="page-content">
+        <!-- Group Tab Navigation -->
+        <div class="group-tabs">
+          <a href="/group-dashboard.html" class="group-tab" style="display: inline-flex; align-items: center; gap: 6px;">
+            <i data-lucide="layout-dashboard" style="width: 16px; height: 16px;"></i> Dashboard
+          </a>
+          <a href="/pages/group/group-expenses.html" class="group-tab active" style="display: inline-flex; align-items: center; gap: 6px;">
+            <i data-lucide="credit-card" style="width: 16px; height: 16px;"></i> Expenses
+          </a>
+          <a href="/pages/group/settlements.html" class="group-tab" style="display: inline-flex; align-items: center; gap: 6px;">
+            <i data-lucide="handshake" style="width: 16px; height: 16px;"></i> Settlements
+          </a>
+          <a href="/pages/group/contributions.html" class="group-tab" style="display: inline-flex; align-items: center; gap: 6px;">
+            <i data-lucide="download" style="width: 16px; height: 16px;"></i> Contributions
+          </a>
+          <a href="/pages/group/group-investments.html" class="group-tab" style="display: inline-flex; align-items: center; gap: 6px;">
+            <i data-lucide="trending-up" style="width: 16px; height: 16px;"></i> Investments
+          </a>
+        </div>
+
+        <div class="grid grid-cols-3 grid-auto-fit section" style="gap: 24px; margin-bottom: 24px;">
+          <div class="stat-card">
+            <div class="stat-card__header">
+              <span class="stat-card__label">Total Joint Bills</span>
+              <div class="stat-card__icon stat-card__icon--cyan" style="display: flex; align-items: center; justify-content: center;">
+                <i data-lucide="credit-card" style="width: 18px; height: 18px;"></i>
+              </div>
+            </div>
+            <div class="stat-card__value" id="totalBillsVal">₹0.00</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-card__header">
+              <span class="stat-card__label">Your Share Spent</span>
+              <div class="stat-card__icon stat-card__icon--purple" style="display: flex; align-items: center; justify-content: center;">
+                <i data-lucide="user" style="width: 18px; height: 18px;"></i>
+              </div>
+            </div>
+            <div class="stat-card__value" id="userShareSpentVal">₹0.00</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-card__header">
+              <span class="stat-card__label">Your Net Standing</span>
+              <div class="stat-card__icon stat-card__icon--green" id="standingIcon" style="display: flex; align-items: center; justify-content: center;">
+                <i data-lucide="scale" style="width: 18px; height: 18px;"></i>
+              </div>
+            </div>
+            <div class="stat-card__value" id="userNetStandingVal">₹0.00</div>
+          </div>
+        </div>
+
+        <!-- Table Card Section -->
+        <div class="card section">
+          <!-- Reusable Toolbar for Table Engine search/sort/filter -->
+          <div class="table-toolbar" id="expensesToolbar" style="margin-bottom: 16px;">
+            <!-- Search & Filters rendered by TableEngine -->
+          </div>
+
+          <div class="table-wrapper">
+            <table class="data-table" id="expensesTable">
+              <!-- Rendered by TableEngine -->
+            </table>
+          </div>
+
+          <div class="table-pagination" id="expensesPagination" style="margin-top: 16px;">
+            <!-- Rendered by TableEngine -->
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Mobile Bottom Navigation -->
+  <div class="mobile-nav">
+    <a href="/dashboard.html" class="mobile-nav__item">
+      <span class="mobile-nav__icon" style="display: flex; align-items: center; justify-content: center;">
+        <i data-lucide="home" style="width: 18px; height: 18px;"></i>
+      </span>
+      <span class="mobile-nav__label">Home</span>
+    </a>
+    <a href="/pages/personal/expenses.html" class="mobile-nav__item">
+      <span class="mobile-nav__icon" style="display: flex; align-items: center; justify-content: center;">
+        <i data-lucide="credit-card" style="width: 18px; height: 18px;"></i>
+      </span>
+      <span class="mobile-nav__label">Expenses</span>
+    </a>
+    <a href="/pages/group/groups.html" class="mobile-nav__item">
+      <span class="mobile-nav__icon" style="display: flex; align-items: center; justify-content: center;">
+        <i data-lucide="users" style="width: 18px; height: 18px;"></i>
+      </span>
+      <span class="mobile-nav__label">Groups</span>
+    </a>
+    <a href="/group-dashboard.html" class="mobile-nav__item active">
+      <span class="mobile-nav__icon" style="display: flex; align-items: center; justify-content: center;">
+        <i data-lucide="layout-dashboard" style="width: 18px; height: 18px;"></i>
+      </span>
+      <span class="mobile-nav__label">Group Hub</span>
+    </a>
+  </div>
+
+  <!-- Shared Bill Modal -->
+  <div class="modal-overlay" id="expenseModal">
+    <div class="modal modal--md">
+      <div class="modal__header">
+        <h3 class="modal__title" id="modalTitle">Split Shared Bill</h3>
+        <button class="modal__close" data-close-modal>✕</button>
+      </div>
+      <div class="modal__body" style="max-height: 70vh; overflow-y: auto; padding-right: 8px;">
+        <form id="expenseForm" class="auth-form" style="gap:16px;">
+          <input type="hidden" id="expenseId">
+          
+          <div class="grid grid-cols-2" style="gap:16px;">
+            <div class="form-group">
+              <label for="title" class="form-label">Bill Title<span class="required">*</span></label>
+              <input type="text" id="title" class="form-input" placeholder="e.g. Dinner, Rent Share, Uber" required>
+            </div>
+            <div class="form-group">
+              <label for="amount" class="form-label">Total Bill Amount<span class="required">*</span></label>
+              <input type="number" id="amount" class="form-input" placeholder="0.00" step="0.01" min="0.01" required>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-3" style="gap:16px;">
+            <div class="form-group">
+              <label for="category" class="form-label">Category<span class="required">*</span></label>
+              <select id="category" class="form-select" required>
+                <!-- populated dynamically -->
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="paidBy" class="form-label">Paid By<span class="required">*</span></label>
+              <select id="paidBy" class="form-select" required>
+                <!-- populated dynamically -->
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="date" class="form-label">Billing Date<span class="required">*</span></label>
+              <input type="date" id="date" class="form-input" required>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="billLink" class="form-label">Bill Statement / Attachment Link (URL)</label>
+            <input type="url" id="billLink" class="form-input" placeholder="e.g. https://drive.google.com/bill-file-url">
+          </div>
+
+          <div class="form-group">
+            <label for="notes" class="form-label">Short Notes</label>
+            <textarea id="notes" class="form-input" placeholder="Add extra memo details here..." rows="2"></textarea>
+          </div>
+
+          <!-- Split Calculation Subsections -->
+          <div style="border-top: 1px solid var(--glass-border); padding-top: 16px; margin-top: 8px;">
+            <h4 style="font-size: 13px; font-weight: 700; color: var(--primary-cyan); text-transform: uppercase; margin-bottom: 12px; letter-spacing: 0.5px;">
+              Split Configuration Engine
+            </h4>
+
+            <div class="form-group" style="margin-bottom: 16px;">
+              <label class="form-label">Choose Split Logic</label>
+              <div class="split-type-selector" id="splitTypeSelect">
+                <div class="split-type-option active" data-value="Equal">Equal</div>
+                <div class="split-type-option" data-value="Unequal">Exact Amt</div>
+                <div class="split-type-option" data-value="Percentage">Percent %</div>
+                <div class="split-type-option" data-value="Share-based">Shares</div>
+              </div>
+            </div>
+
+            <!-- Dynamic split checklist grid -->
+            <div class="form-group">
+              <label class="form-label" style="display:flex; justify-content:space-between;">
+                <span>Participants Standing Allocation</span>
+                <span style="font-size: 10px; color: var(--text-muted); text-transform:uppercase; cursor:pointer;" onclick="GroupExpensesModule.toggleAllParticipants(true)">Select All</span>
+              </label>
+              <div class="split-participants" id="splitParticipantsContainer">
+                <!-- Dynamically populated checklist -->
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal__footer">
+        <button class="btn btn-secondary" data-close-modal>Cancel</button>
+        <button class="btn btn-primary" id="saveExpenseBtn" onclick="GroupExpensesModule.saveExpense()">Save Split</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- core Javascripts -->
+  <script src="/assets/js/utils.js"></script>
+  <script src="/assets/js/firebase/firebase-config.js"></script>
+  <script src="/assets/js/firebase/auth.js"></script>
+  <script src="/assets/js/firebase/firestore.js"></script>
+  <script src="/assets/js/ui.js"></script>
+  <script src="/assets/js/table.js"></script>
+  <script src="/assets/js/animations.js"></script>
+  <script src="/assets/js/pdf-export.js"></script>
+  <script src="/assets/js/group/split-engine.js"></script>
+  <script src="/assets/js/group/group-expenses.js"></script>
+  <script src="/assets/js/app.js"></script>
+</body>
+</html>

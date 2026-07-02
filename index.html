@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Syntax Syndicate | Expense Tracker</title>
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="/assets/css/variables.css">
+  <link rel="stylesheet" href="/assets/css/base.css">
+  <link rel="stylesheet" href="/assets/css/components.css">
+  <link rel="stylesheet" href="/assets/css/animations.css">
+  <link rel="stylesheet" href="/assets/css/auth.css">
+  
+  <!-- Custom landing styles embedded to avoid extra file loads -->
+  <style>
+    .hero-section {
+      text-align: center;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: var(--space-12) var(--space-6);
+      z-index: 1;
+    }
+    .hero-title {
+      font-family: var(--font-display);
+      font-size: 3.5rem;
+      font-weight: 800;
+      line-height: 1.1;
+      margin-bottom: var(--space-6);
+      color: var(--text-primary);
+    }
+    .hero-subtitle {
+      font-size: var(--fs-lg);
+      color: var(--text-secondary);
+      max-width: 600px;
+      margin: 0 auto var(--space-10) auto;
+      line-height: 1.6;
+    }
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--space-6);
+      margin-top: var(--space-12);
+      max-width: 900px;
+      width: 100%;
+    }
+    @media (max-width: 768px) {
+      .hero-title { font-size: 2.5rem; }
+      .feature-grid { grid-template-columns: 1fr; }
+    }
+    .feature-card {
+      text-align: left;
+      border: 1px solid var(--border-primary);
+      background: var(--bg-card);
+      transition: all 0.3s ease;
+    }
+    .feature-card:hover {
+      transform: translateY(-4px);
+    }
+    .feature-card__icon {
+      font-size: 2.5rem;
+      margin-bottom: var(--space-4);
+      color: var(--primary-cyan);
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      height: 48px;
+    }
+    .nav-buttons {
+      display: flex;
+      gap: var(--space-4);
+      justify-content: center;
+      margin-bottom: var(--space-8);
+    }
+  </style>
+
+  <!-- Firebase SDK (v9 compat) -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+</head>
+<body class="auth-page" style="flex-direction: column; justify-content: flex-start; overflow-y: auto;">
+  <!-- Glowing Orbs (Hidden via CSS but kept empty class) -->
+  <div class="auth-page__bg-orb auth-page__bg-orb--1"></div>
+  <div class="auth-page__bg-orb auth-page__bg-orb--2"></div>
+  <div class="auth-page__bg-orb auth-page__bg-orb--3"></div>
+
+  <!-- Hero Section -->
+  <div class="hero-section">
+    <div class="auth-card__logo" style="margin-bottom: var(--space-8);">
+      <div class="auth-card__logo-icon">
+        <i data-lucide="bar-chart-3" style="width: 24px; height: 24px;"></i>
+      </div>
+      <span class="auth-card__logo-text">Expense Tracker</span>
+    </div>
+
+    <h1 class="hero-title">Track. Split. Invest.<br>Double Your Wealth.</h1>
+    <p class="hero-subtitle">
+      A beautiful premium interface for tracking your personal finances and managing group expenses with state-of-the-art splits, settlement systems, and portfolio management.
+    </p>
+
+    <div class="nav-buttons">
+      <a href="/login.html" class="btn btn-primary btn-lg" style="display: inline-flex; align-items: center; gap: 8px;">
+        Launch Dashboard <i data-lucide="arrow-right" style="width: 18px; height: 18px;"></i>
+      </a>
+      <a href="/signup.html" class="btn btn-secondary btn-lg">
+        Create Free Account
+      </a>
+    </div>
+
+    <!-- Feature Showcase Grid -->
+    <div class="feature-grid">
+      <div class="card feature-card">
+        <div class="feature-card__icon">
+          <i data-lucide="user" style="width: 32px; height: 32px;"></i>
+        </div>
+        <h3 class="card__title" style="font-size: var(--fs-lg); margin-bottom: 8px;">Personal Finance</h3>
+        <p class="card__subtitle" style="line-height: 1.5;">
+          Log income and expenses, set monthly budgets for categories, visualize trends with interactive charts, track savings goals, and manage your investment portfolio.
+        </p>
+      </div>
+
+      <div class="card feature-card">
+        <div class="feature-card__icon">
+          <i data-lucide="users" style="width: 32px; height: 32px;"></i>
+        </div>
+        <h3 class="card__title" style="font-size: var(--fs-lg); margin-bottom: 8px;">Group Split System</h3>
+        <p class="card__subtitle" style="line-height: 1.5;">
+          Create financial groups for trips, events, or roommates. Split bills 4 different ways (equal, unequal, percentage, share-based). Manage group investments and settlements.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <footer style="margin-top: auto; padding: var(--space-8) var(--space-4); text-align: center; color: var(--text-muted); font-size: var(--fs-xs); z-index: 1;">
+    &copy; 2026 Syntax Syndicate. Built with premium minimalist matte black aesthetics.
+  </footer>
+
+  <!-- Firebase Scripts -->
+  <script src="/assets/js/firebase/firebase-config.js"></script>
+  <script src="/assets/js/firebase/auth.js"></script>
+  <script>
+    // If user is already logged in, redirect automatically to dashboard
+    document.addEventListener('DOMContentLoaded', () => {
+      lucide.createIcons();
+      auth.onAuthStateChanged((user) => {
+        if (user) {
+          window.location.href = '/dashboard.html';
+        }
+      });
+    });
+  </script>
+</body>
+</html>

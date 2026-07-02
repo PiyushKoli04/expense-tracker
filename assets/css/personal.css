@@ -1,0 +1,287 @@
+/* ============================================
+   PERSONAL — personal.css
+   Personal Finance Module Styles
+   ============================================ */
+
+/* ── Investment Cards ── */
+.investment-type-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: var(--space-3);
+  margin-bottom: var(--space-6);
+}
+
+.investment-type-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-4);
+  background: var(--bg-card);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-lg);
+  cursor: pointer;
+  transition: all var(--transition-base);
+  text-align: center;
+}
+
+.investment-type-card:hover,
+.investment-type-card.active {
+  border-color: var(--border-active);
+  background: var(--bg-card-hover);
+}
+
+.investment-type-card.active {
+  box-shadow: none;
+}
+
+.investment-type-card__icon {
+  font-size: var(--fs-2xl);
+}
+
+.investment-type-card__label {
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-medium);
+  color: var(--text-secondary);
+}
+
+.investment-type-card__count {
+  font-size: var(--fs-xs);
+  color: var(--text-muted);
+}
+
+/* ── Portfolio Summary ── */
+.portfolio-summary {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: var(--space-5);
+  margin-bottom: var(--space-8);
+}
+
+.portfolio-stat {
+  background: var(--bg-card);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-xl);
+  padding: var(--space-5);
+  text-align: center;
+  transition: all var(--transition-base);
+}
+
+.portfolio-stat:hover {
+  border-color: var(--glass-border-hover);
+}
+
+.portfolio-stat__label {
+  font-size: var(--fs-sm);
+  color: var(--text-muted);
+  margin-bottom: var(--space-2);
+}
+
+.portfolio-stat__value {
+  font-family: var(--font-display);
+  font-size: var(--fs-2xl);
+  font-weight: var(--fw-bold);
+}
+
+.portfolio-stat__change {
+  font-size: var(--fs-xs);
+  margin-top: var(--space-1);
+}
+
+/* ── Savings Goals ── */
+.savings-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: var(--space-5);
+}
+
+.savings-card {
+  background: var(--bg-card);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-xl);
+  padding: var(--space-6);
+  transition: all var(--transition-base);
+}
+
+.savings-card:hover {
+  border-color: var(--glass-border-hover);
+  box-shadow: var(--shadow-card-hover);
+}
+
+.savings-card__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: var(--space-4);
+}
+
+.savings-card__title {
+  font-size: var(--fs-md);
+  font-weight: var(--fw-semibold);
+  margin-bottom: var(--space-1);
+}
+
+.savings-card__deadline {
+  font-size: var(--fs-xs);
+  color: var(--text-muted);
+}
+
+.savings-card__amounts {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: var(--space-3);
+}
+
+.savings-card__saved {
+  font-family: var(--font-display);
+  font-size: var(--fs-xl);
+  font-weight: var(--fw-bold);
+  color: var(--primary-cyan);
+}
+
+.savings-card__target {
+  font-size: var(--fs-sm);
+  color: var(--text-muted);
+}
+
+.savings-card__percentage {
+  text-align: right;
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-semibold);
+  margin-top: var(--space-2);
+}
+
+.savings-card__actions {
+  display: flex;
+  gap: var(--space-2);
+  margin-top: var(--space-4);
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--glass-border);
+}
+
+/* ── Budget Page ── */
+.budget-overview {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-6);
+  margin-bottom: var(--space-8);
+}
+
+.budget-total-card {
+  background: var(--bg-card);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-xl);
+  padding: var(--space-6);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.budget-total-card__label {
+  font-size: var(--fs-sm);
+  color: var(--text-muted);
+  margin-bottom: var(--space-3);
+}
+
+.budget-total-card__amount {
+  font-family: var(--font-display);
+  font-size: var(--fs-3xl);
+  font-weight: var(--fw-bold);
+}
+
+.budget-total-card__sub {
+  font-size: var(--fs-sm);
+  color: var(--text-muted);
+  margin-top: var(--space-2);
+}
+
+.budget-categories {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+
+.budget-category {
+  background: var(--bg-card);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-xl);
+  padding: var(--space-5);
+}
+
+.budget-category__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-3);
+}
+
+.budget-category__name {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-semibold);
+}
+
+.budget-category__values {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-2);
+  font-size: var(--fs-sm);
+}
+
+.budget-category__spent {
+  font-weight: var(--fw-semibold);
+  font-family: var(--font-mono);
+}
+
+.budget-category__limit {
+  color: var(--text-muted);
+}
+
+.budget-category__status {
+  font-size: var(--fs-xs);
+  margin-top: var(--space-2);
+  text-align: right;
+}
+
+.budget-category--over .budget-category__spent {
+  color: var(--accent-red);
+}
+
+.budget-category--warning .budget-category__spent {
+  color: var(--accent-orange);
+}
+
+/* ── Income Page ── */
+.income-summary {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: var(--space-5);
+  margin-bottom: var(--space-8);
+}
+
+/* ── Expense Category Icons ── */
+.category-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--fs-md);
+  flex-shrink: 0;
+}
+
+.category-icon--food { background: rgba(249, 115, 22, 0.12); color: var(--accent-orange); }
+.category-icon--transport { background: rgba(99, 102, 241, 0.12); color: var(--primary-cyan); }
+.category-icon--shopping { background: rgba(236, 72, 153, 0.12); color: var(--accent-pink); }
+.category-icon--bills { background: rgba(239, 68, 68, 0.12); color: var(--accent-red); }
+.category-icon--entertainment { background: rgba(79, 70, 229, 0.12); color: var(--primary-purple); }
+.category-icon--health { background: rgba(34, 197, 94, 0.12); color: var(--accent-green); }
+.category-icon--education { background: rgba(99, 102, 241, 0.12); color: var(--primary-cyan); }
+.category-icon--other { background: rgba(255, 255, 255, 0.06); color: var(--text-muted); }
+.category-icon--income { background: rgba(34, 197, 94, 0.12); color: var(--accent-green); }
+.category-icon--investment { background: rgba(20, 184, 166, 0.12); color: var(--accent-teal); }

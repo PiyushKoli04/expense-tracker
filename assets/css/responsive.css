@@ -1,0 +1,436 @@
+/* ============================================
+   RESPONSIVE — responsive.css
+   Media Queries & Mobile Adaptations
+   ============================================ */
+
+@import url("mobile.css");
+
+/* ══════════════════════════════════════════════
+   TABLET (max-width: 1024px)
+   ══════════════════════════════════════════════ */
+@media (max-width: 1024px) {
+  :root {
+    --container-padding: var(--space-5);
+  }
+
+  .grid-cols-4 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .grid-cols-3 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .dashboard-charts {
+    grid-template-columns: 1fr;
+  }
+
+  .budget-overview {
+    grid-template-columns: 1fr;
+  }
+
+  .split-type-selector {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .header__search {
+    min-width: 160px;
+  }
+
+  .col-span-2,
+  .col-span-3 {
+    grid-column: span 1;
+  }
+}
+
+/* ══════════════════════════════════════════════
+   MOBILE LANDSCAPE / SMALL TABLET (max-width: 768px)
+   ══════════════════════════════════════════════ */
+@media (max-width: 768px) {
+  :root {
+    --container-padding: var(--space-4);
+  }
+
+  /* ── Sidebar → Hidden ── */
+  .sidebar {
+    transform: translateX(-100%);
+  }
+
+  .sidebar.open {
+    transform: translateX(0);
+  }
+
+  .sidebar-overlay {
+    display: none;
+  }
+
+  .sidebar-overlay.active {
+    display: block;
+  }
+
+  .main-content {
+    margin-left: 0;
+  }
+
+  .header__menu-btn {
+    display: flex;
+  }
+
+  /* ── Mobile Nav → Visible ── */
+  .mobile-nav {
+    display: flex;
+  }
+
+  .page-content {
+    padding-bottom: calc(var(--mobile-nav-height) + var(--space-6));
+  }
+
+  /* ── Grid Adjustments ── */
+  .grid-cols-2,
+  .grid-cols-3,
+  .grid-cols-4 {
+    grid-template-columns: 1fr;
+  }
+
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-3);
+  }
+
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+
+  /* ── Header Adjustments ── */
+  .header__search {
+    display: none;
+  }
+
+  .header__title {
+    font-size: var(--fs-lg);
+  }
+
+  /* ── Page Header ── */
+  .page-header__title {
+    font-size: var(--fs-2xl);
+  }
+
+  .page-header__title-row {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  /* ── Section ── */
+  .section__header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  /* ── Dashboard Welcome ── */
+  .dashboard-welcome__greeting {
+    font-size: var(--fs-2xl);
+  }
+
+  /* ── Groups Grid ── */
+  .groups-grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* ── Group Detail ── */
+  .group-detail-header__stats {
+    gap: var(--space-4);
+  }
+
+  .group-tabs {
+    gap: 0;
+  }
+
+  .group-tab {
+    padding: var(--space-2) var(--space-3);
+    font-size: var(--fs-xs);
+  }
+
+  /* ── Tables → Card Mode ── */
+  .table-wrapper.mobile-cards .data-table thead {
+    display: none;
+  }
+
+  .table-wrapper.mobile-cards .data-table tbody {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    padding: var(--space-3);
+  }
+
+  .table-wrapper.mobile-cards .data-table tbody tr {
+    display: flex;
+    flex-direction: column;
+    background: var(--bg-card);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-lg);
+    padding: var(--space-4);
+    gap: var(--space-2);
+  }
+
+  .table-wrapper.mobile-cards .data-table td {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--space-1) 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+    font-size: var(--fs-sm);
+  }
+
+  .table-wrapper.mobile-cards .data-table td::before {
+    content: attr(data-label);
+    font-weight: var(--fw-semibold);
+    color: var(--text-muted);
+    font-size: var(--fs-xs);
+    text-transform: uppercase;
+    letter-spacing: var(--ls-wider);
+  }
+
+  .table-wrapper.mobile-cards .data-table td:last-child {
+    border-bottom: none;
+  }
+
+  .table-wrapper.mobile-cards .data-table .cell-actions {
+    justify-content: flex-end;
+    padding-top: var(--space-2);
+  }
+
+  /* ── Table Toolbar Mobile ── */
+  .table-toolbar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .table-search input {
+    width: 100%;
+  }
+
+  .table-filters {
+    flex-wrap: wrap;
+  }
+
+  /* ── Pagination Mobile ── */
+  .table-pagination {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  /* ── Modal Mobile ── */
+  .modal {
+    max-width: 100%;
+    max-height: 85vh;
+    margin: auto var(--space-3);
+    border-radius: var(--radius-xl);
+  }
+
+  .modal__body {
+    padding: var(--space-4);
+  }
+
+  .modal__header {
+    padding: var(--space-4);
+  }
+
+  .modal__footer {
+    padding: var(--space-3) var(--space-4);
+  }
+
+  /* ── Toast Mobile ── */
+  .toast-container {
+    top: auto;
+    bottom: calc(var(--mobile-nav-height) + var(--space-4));
+    right: var(--space-3);
+    left: var(--space-3);
+  }
+
+  .toast {
+    min-width: auto;
+    max-width: 100%;
+  }
+
+  /* ── Charts Mobile ── */
+  .chart-canvas-wrapper--bar,
+  .chart-canvas-wrapper--line {
+    height: 220px;
+  }
+
+  .chart-canvas-wrapper--doughnut,
+  .chart-canvas-wrapper--pie {
+    height: 200px;
+    max-width: 260px;
+  }
+
+  .chart-container {
+    padding: var(--space-4);
+  }
+
+  /* ── Savings & Investment Cards ── */
+  .savings-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .portfolio-summary {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .investment-type-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  /* ── Member Balances ── */
+  .member-balances {
+    grid-template-columns: 1fr;
+  }
+
+  /* ── Auth Card ── */
+  .auth-card {
+    padding: var(--space-6);
+  }
+
+  .auth-card__title {
+    font-size: var(--fs-xl);
+  }
+
+  /* ── Quick Actions ── */
+  .quick-actions {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  /* ── Contribution Bars ── */
+  .contribution-bar {
+    flex-direction: column;
+    align-items: stretch;
+    gap: var(--space-2);
+  }
+
+  .contribution-bar__name {
+    width: auto;
+  }
+
+  .contribution-bar__value {
+    width: auto;
+    text-align: left;
+    margin-top: var(--space-1);
+  }
+}
+
+/* ══════════════════════════════════════════════
+   SMALL MOBILE (max-width: 480px)
+   ══════════════════════════════════════════════ */
+@media (max-width: 480px) {
+  :root {
+    --container-padding: var(--space-3);
+    --fs-4xl: 2rem;
+    --fs-3xl: 1.625rem;
+    --fs-2xl: 1.3125rem;
+  }
+
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .stat-card {
+    padding: var(--space-4);
+  }
+
+  .stat-card__value {
+    font-size: var(--fs-xl);
+  }
+
+  .quick-actions {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .investment-type-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .portfolio-summary {
+    grid-template-columns: 1fr;
+  }
+
+  .split-type-selector {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .group-card__stats {
+    grid-template-columns: 1fr;
+  }
+
+  .card {
+    padding: var(--space-4);
+  }
+
+  .auth-card {
+    padding: var(--space-5);
+  }
+
+  .auth-card__logo-text {
+    font-size: var(--fs-xl);
+  }
+
+  .tab-nav {
+    gap: 0;
+  }
+
+  .tab-nav__item {
+    padding: var(--space-2) var(--space-3);
+    font-size: var(--fs-xs);
+  }
+}
+
+/* ══════════════════════════════════════════════
+   ULTRAWIDE (min-width: 1600px)
+   ══════════════════════════════════════════════ */
+@media (min-width: 1600px) {
+  :root {
+    --content-max-width: 1600px;
+  }
+
+  .stats-grid {
+    grid-template-columns: repeat(6, 1fr);
+  }
+
+  .dashboard-charts {
+    grid-template-columns: 2fr 1fr 1fr;
+  }
+}
+
+/* ══════════════════════════════════════════════
+   PRINT STYLES
+   ══════════════════════════════════════════════ */
+@media print {
+  .sidebar,
+  .mobile-nav,
+  .header,
+  .toast-container,
+  .modal-overlay {
+    display: none !important;
+  }
+
+  .main-content {
+    margin-left: 0 !important;
+  }
+
+  .page-content {
+    padding: 0 !important;
+  }
+
+  body {
+    background: white;
+    color: black;
+  }
+
+  .card,
+  .stat-card,
+  .table-wrapper {
+    background: white;
+    border: 1px solid #ddd;
+    box-shadow: none;
+  }
+}

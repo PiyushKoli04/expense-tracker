@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login | Syntax Syndicate Expense Tracker</title>
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="/assets/css/variables.css">
+  <link rel="stylesheet" href="/assets/css/base.css">
+  <link rel="stylesheet" href="/assets/css/components.css">
+  <link rel="stylesheet" href="/assets/css/animations.css">
+  <link rel="stylesheet" href="/assets/css/auth.css">
+  
+  <!-- Firebase SDK (v9 compat) -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+</head>
+<body class="auth-page">
+  <!-- Glowing Orbs (Hidden via CSS but kept empty class) -->
+  <div class="auth-page__bg-orb auth-page__bg-orb--1"></div>
+  <div class="auth-page__bg-orb auth-page__bg-orb--2"></div>
+  <div class="auth-page__bg-orb auth-page__bg-orb--3"></div>
+
+  <!-- Login Card -->
+  <div class="auth-card">
+    <div class="auth-card__logo">
+      <div class="auth-card__logo-icon">
+        <i data-lucide="bar-chart-3" style="width: 24px; height: 24px;"></i>
+      </div>
+      <span class="auth-card__logo-text">Expense Tracker</span>
+    </div>
+    
+    <h1 class="auth-card__title">Welcome Back</h1>
+    <p class="auth-card__subtitle">Please enter your details to sign in</p>
+    
+    <!-- Error Message Alert -->
+    <div id="authError" class="auth-error" style="align-items: center; gap: 8px;">
+      <i data-lucide="alert-triangle" style="width: 18px; height: 18px; flex-shrink: 0;"></i>
+      <span id="authErrorText" class="auth-error__text">Invalid credentials.</span>
+    </div>
+    
+    <form id="loginForm" class="auth-form" novalidate>
+      <div class="form-group">
+        <label for="email" class="form-label">Email Address<span class="required">*</span></label>
+        <div class="auth-form__input-wrapper">
+          <span class="auth-form__input-icon">
+            <i data-lucide="mail" style="width: 16px; height: 16px;"></i>
+          </span>
+          <input type="email" id="email" class="form-input" placeholder="name@example.com" required>
+        </div>
+      </div>
+      
+      <div class="form-group">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <label for="password" class="form-label">Password<span class="required">*</span></label>
+          <a href="#" class="auth-form__forgot" id="forgotBtn">Forgot Password?</a>
+        </div>
+        <div class="auth-form__input-wrapper">
+          <span class="auth-form__input-icon">
+            <i data-lucide="lock" style="width: 16px; height: 16px;"></i>
+          </span>
+          <input type="password" id="password" class="form-input" placeholder="••••••••" required>
+        </div>
+      </div>
+      
+      <button type="submit" id="submitBtn" class="btn btn-primary auth-form__submit btn-full">
+        Sign In
+      </button>
+    </form>
+    
+    <div class="auth-divider">
+      <span class="auth-divider__text">Or continue with</span>
+    </div>
+    
+    <button type="button" id="googleBtn" class="auth-google-btn">
+      <svg viewBox="0 0 24 24" width="20" height="20">
+        <path fill="#EA4335" d="M12 5.04c1.66 0 3.2.57 4.38 1.69l3.27-3.27C17.68 1.54 14.98 1 12 1 7.35 1 3.37 3.65 1.39 7.5l3.85 2.99C6.16 7.23 8.87 5.04 12 5.04z"/>
+        <path fill="#4285F4" d="M23.49 12.27c0-.81-.07-1.59-.2-2.27H12v4.51h6.44c-.28 1.47-1.11 2.71-2.36 3.55l3.66 2.84c2.14-1.98 3.75-4.89 3.75-8.63z"/>
+        <path fill="#FBBC05" d="M5.24 14.51c-.24-.72-.38-1.49-.38-2.29s.14-1.57.38-2.29L1.39 7.5C.5 9.3.01 11.33.01 13.5s.49 4.2 1.38 6l3.85-2.99z"/>
+        <path fill="#34A853" d="M12 23c3.24 0 5.97-1.07 7.96-2.91l-3.66-2.84c-1.01.68-2.31 1.09-4.3 1.09-3.13 0-5.84-2.19-6.76-5.45L1.39 16.5C3.37 20.35 7.35 23 12 23z"/>
+      </svg>
+      Google
+    </button>
+    
+    <div class="auth-card__footer">
+      Don't have an account? <a href="/signup.html">Sign Up</a>
+    </div>
+  </div>
+
+  <!-- Firebase Scripts -->
+  <script src="/assets/js/firebase/firebase-config.js"></script>
+  <script src="/assets/js/firebase/auth.js"></script>
+  <script src="/assets/js/ui.js"></script>
+  
+  <script>
+    // Redirect if user already authenticated
+    document.addEventListener('DOMContentLoaded', () => {
+      lucide.createIcons();
+      Auth.redirectIfAuthenticated();
+      
+      const form = document.getElementById('loginForm');
+      const submitBtn = document.getElementById('submitBtn');
+      const googleBtn = document.getElementById('googleBtn');
+      const errorDiv = document.getElementById('authError');
+      const errorText = document.getElementById('authErrorText');
+      const forgotBtn = document.getElementById('forgotBtn');
+
+      function showError(msg) {
+        errorText.textContent = msg;
+        errorDiv.classList.add('show');
+      }
+
+      function clearError() {
+        errorDiv.classList.remove('show');
+      }
+
+      // Handle Email/Password Login
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        clearError();
+
+        const email = document.getElementById('email').value.trim();
+        const password = document.getElementById('password').value;
+
+        if (!email || !password) {
+          showError('Please fill in all required fields.');
+          return;
+        }
+
+        UI.showButtonSpinner(submitBtn, 'Signing In...');
+
+        const result = await Auth.loginWithEmail(email, password);
+        
+        if (result.success) {
+          UI.showToast('Login successful!', 'success');
+          setTimeout(() => {
+            window.location.href = '/dashboard.html';
+          }, 500);
+        } else {
+          UI.hideButtonSpinner(submitBtn);
+          showError(result.error);
+        }
+      });
+
+      // Handle Google Login
+      googleBtn.addEventListener('click', async () => {
+        clearError();
+        const result = await Auth.signInWithGoogle();
+        
+        if (result.success) {
+          UI.showToast('Login successful!', 'success');
+          setTimeout(() => {
+            window.location.href = '/dashboard.html';
+          }, 500);
+        } else {
+          showError(result.error);
+        }
+      });
+
+      // Handle Forgot Password
+      forgotBtn.addEventListener('click', async (e) => {
+        e.preventDefault();
+        clearError();
+        const email = document.getElementById('email').value.trim();
+        
+        if (!email) {
+          showError('Please enter your email to reset password.');
+          return;
+        }
+
+        try {
+          await auth.sendPasswordResetEmail(email);
+          UI.showToast('Password reset link sent to your email!', 'success');
+        } catch (error) {
+          showError(error.message);
+        }
+      });
+    });
+  </script>
+</body>
+</html>
